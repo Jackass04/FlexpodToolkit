@@ -1,0 +1,22 @@
+#create string path for the excel file
+$strPath = "C:\Users\Joshua\Documents\Labs Information\VNX2BLab.xlsx"
+
+#create new COM object for excel application
+$objExcel = New-Object -ComObject Excel.Application
+$objExcel.Visible = $false
+
+#create workbook variable to hold workbook object.
+$WorkBook = $objExcel.Workbooks.Open($strPath)
+
+#create worksheet variable to hold worksheet object from the workbook object.
+$WorkSheet = $WorkBook.sheets.item("LUN Config")
+
+$MaxRows = $WorkSheet.UsedRange.Rows.count   
+
+for($curRow = 2; $curRow -le $MaxRows; $curRow++)
+{
+	Write-Host $worksheet.Cells.Item($curRow, 1).value2
+}
+$objExcel.Quit()
+while([System.Runtime.InteropServices.Marshal]::ReleaseComObject($objExcel)){'released one count'}
+[System.GC]::Collect()
